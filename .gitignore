@@ -1,0 +1,75 @@
+
+# === OS-Specific ===
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# === Build ===
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Visual Studio
+*.vcxproj*
+*.sln
+*.user
+*.obj
+*.pdb
+*.log
+*.idb
+*.tlog
+*.ipch
+*.aps
+
+# Ninja build system
+.ninja*
+build.ninja
+rules.ninja
+
+# === Compiler Output ===
+*.out
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# === Logs & Misc ===
+*.log
+*.tmp
+
+# === IDEs and Editors ===
+
+# CLion
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime
+*.sublime-*
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*#
+
+# === Others ===
+
+# Ignore all dotfiles (unless explicitly needed)
+.*
+!.gitignore
+!.keep
