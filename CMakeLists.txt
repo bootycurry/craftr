@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.14)
 project(craftr)
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include GLFW from the external/glfw submodule
 add_subdirectory(external/glfw)
 
 # Compile GLAD as a static library
-add_library(glad STATIC glad.c)
+add_library(glad STATIC glad.cpp)
 target_include_directories(glad PUBLIC include)
 
 # Platform-specific OpenGL and system libraries
@@ -25,7 +25,7 @@ else()  # Windows
 endif()
 
 # Main executable
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(${PROJECT_NAME} src/main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries
