@@ -36,7 +36,10 @@ else()  # Windows
 endif()
 
 # Main executable
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} 
+    src/main.cpp
+    src/craftrEditor/log_window.cpp
+)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries
