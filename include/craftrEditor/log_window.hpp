@@ -1,5 +1,5 @@
-#ifndef CRAFTER_LOGWIDGET_HPP
-#define CRAFTER_LOGWIDGET_HPP
+#ifndef CRAFTER_LOGWINDOW_HPP
+#define CRAFTER_LOGWINDOW_HPP
 
 #include <gtkmm/button.h>
 #include <gtkmm/frame.h>

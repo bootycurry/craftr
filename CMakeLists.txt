@@ -38,7 +38,8 @@ endif()
 # Main executable
 add_executable(${PROJECT_NAME} 
     src/main.cpp
-    src/craftrEditor/log_window.cpp
+    # src/craftrEditor/log_window.cpp
+    src/craftrEditor/log_display.cpp
 )
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
