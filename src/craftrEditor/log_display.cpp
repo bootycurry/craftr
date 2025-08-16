@@ -29,19 +29,19 @@ LogDisplay::LogDisplay()
   Glib::RefPtr<Gtk::TextTagTable> tag_table = buffer->get_tag_table();
 
   auto tag = Gtk::TextTag::create("INFO");
-  tag->property_foreground() = "#0A58CA";
+  tag->property_foreground() = "#569CD6";
   tag_table->add(tag);
 
   tag = Gtk::TextTag::create("ERROR");
-  tag->property_foreground() = "#C82333";
+  tag->property_foreground() = "#E57373";
   tag_table->add(tag);
 
   tag = Gtk::TextTag::create("DEBUG");
-  tag->property_foreground() = "#008080";
+  tag->property_foreground() = "#81C784";
   tag_table->add(tag);
 
   tag = Gtk::TextTag::create("WARNING");
-  tag->property_foreground() = "#B57500";
+  tag->property_foreground() = "#FFB74D";
   tag_table->add(tag);
 }
 

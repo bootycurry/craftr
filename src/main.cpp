@@ -1,8 +1,5 @@
 #include <glad/glad.h>
-#include <gtkmm/application.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/paned.h>
-#include <gtkmm/window.h>
+#include <gtkmm-4.0/gtkmm.h>
 
 #include <craftrEditor/log_display.hpp>
 
@@ -65,5 +62,7 @@ private:
 
 int main(int argc, char *argv[]) {
   auto app = std::make_shared<CraftrEditorAppTemp>();
+  Glib::RefPtr<Gtk::Settings> settings = Gtk::Settings::get_default();
+  settings->property_gtk_application_prefer_dark_theme().set_value(true);
   return app->run(argc, argv);
 }
