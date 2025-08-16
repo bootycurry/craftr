@@ -1,7 +1,8 @@
+#include <chrono>
 #include <craftrEditor/log_display.hpp>
+#include <format>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/enums.h>
-#include <iostream>
 
 LogDisplay::LogDisplay()
     : reset_button("Reset Log"), main_box(Gtk::Orientation::VERTICAL) {
@@ -19,25 +20,28 @@ LogDisplay::LogDisplay()
   scroll_container.set_vexpand(true);
 
   auto css_provider = Gtk::CssProvider::create();
-  css_provider->load_from_data(
-      "textview text { background-color: #000000; font-size: 22px; }");
+  css_provider->load_from_data("textview text {  font-size: 22px; }");
 
   auto context = log_text.get_style_context();
   context->add_provider(css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
 
   Glib::RefPtr<Gtk::TextBuffer> buffer = log_text.get_buffer();
   Glib::RefPtr<Gtk::TextTagTable> tag_table = buffer->get_tag_table();
+
   auto tag = Gtk::TextTag::create("INFO");
-  tag->property_foreground() = "#0000FF";
+  tag->property_foreground() = "#0A58CA";
   tag_table->add(tag);
+
   tag = Gtk::TextTag::create("ERROR");
-  tag->property_foreground() = "#FF0000";
+  tag->property_foreground() = "#C82333";
   tag_table->add(tag);
+
   tag = Gtk::TextTag::create("DEBUG");
-  tag->property_foreground() = "#00FF00";
+  tag->property_foreground() = "#008080";
   tag_table->add(tag);
+
   tag = Gtk::TextTag::create("WARNING");
-  tag->property_foreground() = "#FFFF00";
+  tag->property_foreground() = "#B57500";
   tag_table->add(tag);
 }
 
@@ -66,6 +70,11 @@ void LogDisplay::log(const Glib::ustring &message, const LogType log_type) {
     prefix = "[INFO] ";
     break;
   }
+  const auto now = std::chrono::floor<std::chrono::seconds>(
+      std::chrono::system_clock::now());
+  const std::chrono::zoned_time local_time{std::chrono::current_zone(), now};
+  std::string timestamp = std::format("{:%d-%m-%Y %H:%M:%S}", local_time);
+  prefix = "[" + Glib::ustring(timestamp) + "] " + prefix;
 
   Glib::RefPtr<Gtk::TextBuffer> buffer = log_text.get_buffer();
   Glib::RefPtr<Gtk::TextTag> tag = buffer->get_tag_table()->lookup(tag_name);
