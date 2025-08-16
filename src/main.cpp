@@ -1,7 +1,4 @@
 #include <glad/glad.h>
-#include <iostream>
-#include <logger.hpp>
-
 #include <gtkmm/application.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/paned.h>
