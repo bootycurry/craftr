@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <gtkmm-4.0/gtkmm.h>
 
-#include <craftrEditor/log_display.hpp>
+#include "craftrEditor/log_display.hpp"
 
 Gtk::Window *temp_main_window = nullptr;
 
