@@ -2,7 +2,7 @@
 
 # This script does a clean build in the build directory
 
-set -e  # Exit immediately if a command fails
+set -e # Exit immediately if a command fails
 
 BUILD_DIR=build
 
@@ -17,7 +17,7 @@ cd "$BUILD_DIR"
 cmake --build . --target clean || echo "No previous build to clean."
 
 # Generate build files
-cmake ..
+cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
 # Build the project
 cmake --build .
