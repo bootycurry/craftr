@@ -43,7 +43,7 @@ add_executable(
   ${PROJECT_NAME}
   src/main.cpp
   # src/craftrEditor/log_window.cpp
-  src/craftrEditor/log_display.cpp)
+  src/craftrEditor/log_display.cpp src/logger.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries
