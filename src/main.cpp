@@ -1,7 +1,9 @@
 #include <glad/glad.h>
 #include <gtkmm-4.0/gtkmm.h>
 
-#include <craftrEditor/log_display.hpp>
+#include "craftrEditor/log_display.hpp"
+#include "glibmm/ustring.h"
+#include "logger.hpp"
 
 Gtk::Window *temp_main_window = nullptr;
 
@@ -20,12 +22,9 @@ public:
     bot.set_end_child(bottom_right);
 
     bottom_right.append_page(log_display.main_box);
-
     set_child(hor);
-    log_display.log("application initialized", INFO);
-    log_display.log("application initialized", DEBUG);
-    log_display.log("application initialized", WARNING);
-    log_display.log("application initialized", ERROR);
+    Logger::instance().set_target_display(&log_display);
+    Logger::instance().log(LOG_WINDOW, Glib::ustring("Session Started"), INFO);
   };
   ~MainWindow() override {};
 
@@ -61,6 +60,9 @@ private:
 };
 
 int main(int argc, char *argv[]) {
+  Logger::instance().set_file_path(std::string("./logs/"));
+  Logger::instance().log(CONSOLE, Glib::ustring("Session Started"), INFO);
+  Logger::instance().log(LOG_FILE, Glib::ustring("Session Started"), INFO);
   auto app = std::make_shared<CraftrEditorAppTemp>();
   Glib::RefPtr<Gtk::Settings> settings = Gtk::Settings::get_default();
   settings->property_gtk_application_prefer_dark_theme().set_value(true);

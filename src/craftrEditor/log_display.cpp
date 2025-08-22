@@ -1,5 +1,5 @@
 #include <chrono>
-#include <craftrEditor/log_display.hpp>
+#include "craftrEditor/log_display.hpp"
 #include <format>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/enums.h>
