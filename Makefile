@@ -10,7 +10,7 @@ all: $(BUILD_DIR)/Makefile
 
 $(BUILD_DIR)/Makefile: CMakeLists.txt
 	@mkdir -p $(BUILD_DIR)
-	@$(CMAKE) -B$(BUILD_DIR) -H. $(CMAKE_FLAGS)
+	@$(CMAKE) -S . -B $(BUILD_DIR) -G "Unix Makefiles" $(CMAKE_FLAGS)
 
 clean:
 	@if [ -d "$(BUILD_DIR)" ]; then \
