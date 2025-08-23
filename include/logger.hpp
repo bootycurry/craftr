@@ -4,8 +4,13 @@
 #include "craftrEditor/log_display.hpp"
 #include <filesystem>
 #include <gtkmm.h>
+#include <map>
+#include <string>
 
 enum LogDestination { CONSOLE, LOG_FILE, LOG_WINDOW };
+
+const std::map<LogType, std::string> log_type_to_str_map = {
+    {DEBUG, "DEBUG"}, {INFO, "INFO"}, {WARNING, "WARNING"}, {ERROR, "ERROR"}};
 
 class Logger {
 public:

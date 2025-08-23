@@ -49,26 +49,10 @@ void Logger::log_to_file(const Glib::ustring &message, LogType log_type) {
     perror("Reason");
   }
 
-  std::string log_type_str;
-  switch (log_type) {
-  case LogType::INFO:
-    log_type_str = "INFO";
-    break;
-  case LogType::WARNING:
-    log_type_str = "WARNING";
-    break;
-  case LogType::ERROR:
-    log_type_str = "ERROR";
-    break;
-  case LogType::DEBUG:
-    log_type_str = "DEBUG";
-    break;
-  }
-
   std::string log_time = std::format("{:%d-%m-%Y %H:%M:%S}", local_time);
 
-  log_file << "[" << log_time << "] [" << log_type_str << "] " << message
-           << "\n";
+  log_file << "[" << log_time << "] [" << log_type_to_str_map.at(log_type)
+           << "] " << message << "\n";
 
   log_file.close();
 }
@@ -82,24 +66,8 @@ void Logger::log_to_console(const Glib::ustring &message, LogType log_type) {
       std::chrono::system_clock::now());
   const std::chrono::zoned_time local_time{std::chrono::current_zone(), now};
 
-  std::string log_type_str;
-  switch (log_type) {
-  case LogType::INFO:
-    log_type_str = "INFO";
-    break;
-  case LogType::WARNING:
-    log_type_str = "WARNING";
-    break;
-  case LogType::ERROR:
-    log_type_str = "ERROR";
-    break;
-  case LogType::DEBUG:
-    log_type_str = "DEBUG";
-    break;
-  }
-
   std::string log_time = std::format("{:%d-%m-%Y %H:%M:%S}", local_time);
 
-  std::cout << "[" << log_time << "] [" << log_type_str << "] " << message
-            << std::endl;
+  std::cout << "[" << log_time << "] [" << log_type_to_str_map.at(log_type)
+            << "] " << message << std::endl;
 }
