@@ -42,8 +42,12 @@ endif()
 add_executable(
   ${PROJECT_NAME}
   src/main.cpp
-  # src/craftrEditor/log_window.cpp
-  src/craftrEditor/log_display.cpp src/logger.cpp)
+  src/logger.cpp
+  src/craftr_engine/component.cpp
+  src/craftr_engine/game_object.cpp
+  src/craftrEditor/log_display.cpp
+  src/craftrEditor/scene.cpp
+)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries
