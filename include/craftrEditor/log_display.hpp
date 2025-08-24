@@ -5,7 +5,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
-#include <gtkmm/window.h>
+
 
 enum LogType { INFO, DEBUG, WARNING, ERROR };
 

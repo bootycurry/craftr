@@ -43,7 +43,8 @@ add_executable(
   ${PROJECT_NAME}
   src/main.cpp
   src/logger.cpp
-  # src/craftrEditor/log_window.cpp
+  src/craftr_engine/component.cpp
+  src/craftr_engine/game_object.cpp
   src/craftrEditor/log_display.cpp
   src/craftrEditor/scene.cpp
 )
