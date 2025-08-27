@@ -45,6 +45,8 @@ add_executable(
   src/logger.cpp
   src/craftr_engine/component.cpp
   src/craftr_engine/game_object.cpp
+  src/craftr_engine/transform.cpp
+  src/craftr_engine/vector2.cpp
   src/craftrEditor/log_display.cpp
   src/craftrEditor/scene.cpp
 )
