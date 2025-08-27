@@ -29,7 +29,7 @@ void Transform::set_local_position(Vector2 pos)
         Vector2 right = parent_transform.right();
         set_position(parent_transform.position + pos.x * right + pos.y * up);
     }
-    local_position = pos;
+    
 }
 
 void Transform::set_local_rotation(float rot)
@@ -43,7 +43,7 @@ void Transform::set_local_rotation(float rot)
     {
         set_rotation(game_object -> get_parent() -> transform.rotation + rot);
     }
-    local_rotation = rot;
+    
 }
 
 void Transform::set_local_scale(Vector2 scale)
@@ -58,7 +58,7 @@ void Transform::set_local_scale(Vector2 scale)
         Vector2 parent_scale = game_object -> get_parent() -> transform.scale;
         set_scale(Vector2(parent_scale.x * scale.x, parent_scale.y * scale.y));
     }
-    local_scale = scale;
+    
 }
 
 void Transform::set_position(Vector2 pos)
