@@ -29,3 +29,25 @@ T* GameObject::get_component()
     }
     return nullptr;
 }
+
+void GameObject::set_parent(GameObject& parent)
+{
+    this -> parent = &parent;
+    parent.children.push_back(this);
+}
+
+void GameObject::add_child(GameObject& child)
+{
+    children.push_back(&child);
+    child.parent = this;
+}
+
+GameObject* GameObject::get_parent()
+{
+    return parent;
+}
+
+std::vector<GameObject*> GameObject::get_children()
+{
+    return children;
+}
