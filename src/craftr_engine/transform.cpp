@@ -8,6 +8,11 @@ Vector2 Transform::right() {
   return (Vector2(cos(angle), sin(angle)));
 }
 
+Vector2 Transform::up() {
+  double angle = ((rotation - 90) / 180) * std::numbers::pi;
+  return (Vector2(cos(angle), sin(angle)));
+}
+
 void Transform::set_local_position(Vector2 pos) {
   if (game_object->get_parent() == nullptr) {
     set_position(pos);

@@ -8,3 +8,18 @@ Scene::Scene()
     
     
 }
+
+void Scene::on_realize()
+{
+    return;
+}
+
+void Scene::on_unrealize()
+{
+    return;
+}
+
+bool Scene::on_render(const Glib::RefPtr<Gdk::GLContext> &)
+{
+    return true;
+}

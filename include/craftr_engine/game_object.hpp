@@ -21,9 +21,6 @@ class Component{
     public:
         GameObject* get_game_object();
 
-        Component();
-        ~Component();
-
 
     friend GameObject;
 };
@@ -53,9 +50,6 @@ class Transform : Component{
         void update_position();
         void update_rotation();
         void update_scale();
-
-        Transform();
-        ~Transform();
     
 };
 
@@ -83,8 +77,6 @@ class GameObject{
         GameObject* get_parent();
         std::vector<GameObject*> get_children();
 
-        GameObject();
-        ~GameObject();
 };
 
 

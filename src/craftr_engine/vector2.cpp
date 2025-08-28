@@ -5,12 +5,7 @@ Vector2::Vector2(int x, int y) {
   this->y = y;
 }
 
-Vector2::Vector2() {
-  this->x = 0;
-  this->y = 0;
-}
 
-Vector2::~Vector2() {}
 
 Vector2 Vector2::operator*(const int &other) const {
   return Vector2(this->x * other, this->y * other);
