@@ -2,6 +2,12 @@
 #include <numbers>
 
 #include "craftr_engine/game_object.hpp"
+#include "craftr_engine/vector2.hpp"
+
+Transform::Transform() {
+  position = Vector2();
+  scale = Vector2();
+}
 
 Vector2 Transform::right() {
   double angle = (rotation / 180) * std::numbers::pi;

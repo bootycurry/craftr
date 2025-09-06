@@ -2,6 +2,8 @@
 
 #include "craftr_engine/game_object.hpp"
 
+GameObject::GameObject() : parent(nullptr) {}
+
 template <typename T> void GameObject::add_component() {
   static_assert(std::is_base_of<Component, T>::value,
                 "T must derive from Component");
