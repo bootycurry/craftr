@@ -32,8 +32,9 @@ SceneHierarchy::SceneHierarchy() : Gtk::Box(Gtk::Orientation::VERTICAL) {
 
 void SceneHierarchy::on_button_press(int n_press, double x, double y) {
   Gtk::TreeModel::Path path;
-
-  if (tree_view.get_path_at_pos((int)x, (int)y, path)) {
+  int relative_x = 0,relative_y = 0;
+  tree_view.convert_widget_to_bin_window_coords((int) x, (int) y, relative_x, relative_y);
+  if (tree_view.get_path_at_pos(relative_x, relative_y, path)) {
     ref_tree_selection->select(path);
     show_context_menu(x, y, true);
   } else {
