@@ -2,6 +2,7 @@
 #include <gtkmm-4.0/gtkmm.h>
 
 #include "craftrEditor/log_display.hpp"
+#include "craftrEditor/scene_hierarchy.hpp"
 #include "glibmm/ustring.h"
 #include "logger.hpp"
 
@@ -21,7 +22,9 @@ public:
     bot.set_start_child(bottom_left);
     bot.set_end_child(bottom_right);
 
-    bottom_right.append_page(log_display.main_box);
+    bottom_right.append_page(log_display.main_box, "Log");
+    top_right.append_page(scene_hierarchy, "Scene");
+
     set_child(hor);
     Logger::instance().set_target_display(&log_display);
     Logger::instance().log(LOG_WINDOW, Glib::ustring("Session Started"), INFO);
@@ -35,6 +38,7 @@ protected:
   Gtk::Notebook bottom_right;
 
   LogDisplay log_display;
+  SceneHierarchy scene_hierarchy;
 
 private:
   Gtk::Paned hor;
