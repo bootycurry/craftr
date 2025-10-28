@@ -44,3 +44,9 @@ void GameObject::add_child(GameObject &child) {
 GameObject *GameObject::get_parent() { return parent; }
 
 std::vector<GameObject *> GameObject::get_children() { return children; }
+
+const std::unordered_map<std::type_index, std::unique_ptr<Component>>&
+GameObject::get_all_components() const {
+  return components;
+}
+
