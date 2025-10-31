@@ -5,8 +5,18 @@
 #include "craftr_engine/vector2.hpp"
 
 Transform::Transform() {
-  position = Vector2();
-  scale = Vector2();
+  local_position = Vector2(0, 0);
+  local_scale = Vector2(1, 1);
+  local_rotation = 0.0f;
+
+  
+
+  // Register editable properties
+  REGISTER_PROPERTY(position.x);
+  REGISTER_PROPERTY(position.y);
+  REGISTER_PROPERTY(rotation);
+  REGISTER_PROPERTY(scale.x);
+  REGISTER_PROPERTY(scale.y);
 }
 
 Vector2 Transform::right() {

@@ -3,6 +3,7 @@
 
 #include "craftrEditor/log_display.hpp"
 #include "craftrEditor/scene_hierarchy.hpp"
+#include "craftrEditor/inspector_panel.hpp"
 #include "glibmm/ustring.h"
 #include "logger.hpp"
 
@@ -24,7 +25,12 @@ public:
 
     bottom_right.append_page(log_display.main_box, "Log");
     top_right.append_page(scene_hierarchy, "Scene");
+    bottom_left.append_page(inspector_panel, "Inspector");
 
+    scene_hierarchy.set_inspector_panel(inspector_panel);
+
+
+    
     set_child(hor);
     Logger::instance().set_target_display(&log_display);
     Logger::instance().log(LOG_WINDOW, Glib::ustring("Session Started"), INFO);
@@ -39,6 +45,7 @@ protected:
 
   LogDisplay log_display;
   SceneHierarchy scene_hierarchy;
+  InspectorPanel inspector_panel;
 
 private:
   Gtk::Paned hor;

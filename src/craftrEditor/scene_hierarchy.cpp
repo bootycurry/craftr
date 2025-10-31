@@ -119,3 +119,14 @@ void SceneHierarchy::create_game_object(
   (*new_row_iter)[columns.col_name] = name;
   (*new_row_iter)[columns.game_obj_ptr] = game_obj_raw_ptr;
 }
+
+void SceneHierarchy::set_inspector_panel(InspectorPanel& inspector) {
+      ref_tree_selection->signal_changed().connect([&]() {
+    if (auto iter = ref_tree_selection->get_selected()) {
+      GameObject* go = (*iter)[columns.game_obj_ptr];
+      inspector.set_selected_object(go);
+    } else {
+      inspector.set_selected_object(nullptr);
+    }
+  });
+}

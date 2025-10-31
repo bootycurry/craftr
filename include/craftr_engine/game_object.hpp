@@ -9,6 +9,7 @@
 
 #include "logger.hpp"
 #include "vector2.hpp"
+#include "craftrEditor/property.hpp"
 
 class GameObject;
 
@@ -17,14 +18,18 @@ class Component {
 protected:
   GameObject *game_object;
   void set_game_object(GameObject &object);
+  std::vector<Property> properties;
 
 public:
   GameObject *get_game_object();
+  const std::vector<Property>& get_properties() const;
+  virtual ~Component() = default;
+  virtual std::string get_name() const;
 
   friend GameObject;
 };
 
-class Transform : Component {
+class Transform : public Component {
 protected:
   Vector2 local_position;
   Vector2 local_scale;
@@ -67,6 +72,10 @@ public:
   template <typename T> void add_component();
 
   template <typename T> T *get_component();
+
+
+  const std::unordered_map<std::type_index, std::unique_ptr<Component>>& get_all_components() const;
+
 
   void add_child(GameObject &child);
 
