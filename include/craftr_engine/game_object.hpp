@@ -7,9 +7,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include "craftr_editor/property.hpp"
 #include "logger.hpp"
 #include "vector2.hpp"
-#include "craftrEditor/property.hpp"
 
 class GameObject;
 
@@ -22,7 +22,7 @@ protected:
 
 public:
   GameObject *get_game_object();
-  const std::vector<Property>& get_properties() const;
+  const std::vector<Property> &get_properties() const;
   virtual ~Component() = default;
   virtual std::string get_name() const;
 
@@ -73,9 +73,8 @@ public:
 
   template <typename T> T *get_component();
 
-
-  const std::unordered_map<std::type_index, std::unique_ptr<Component>>& get_all_components() const;
-
+  const std::unordered_map<std::type_index, std::unique_ptr<Component>> &
+  get_all_components() const;
 
   void add_child(GameObject &child);
 

@@ -1,9 +1,9 @@
 #include <glad/glad.h>
 #include <gtkmm-4.0/gtkmm.h>
 
-#include "craftrEditor/log_display.hpp"
-#include "craftrEditor/scene_hierarchy.hpp"
-#include "craftrEditor/inspector_panel.hpp"
+#include "craftr_editor/inspector_panel.hpp"
+#include "craftr_editor/log_display.hpp"
+#include "craftr_editor/scene_hierarchy.hpp"
 #include "glibmm/ustring.h"
 #include "logger.hpp"
 
@@ -29,8 +29,6 @@ public:
 
     scene_hierarchy.set_inspector_panel(inspector_panel);
 
-
-    
     set_child(hor);
     Logger::instance().set_target_display(&log_display);
     Logger::instance().log(LOG_WINDOW, Glib::ustring("Session Started"), INFO);

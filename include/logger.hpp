@@ -1,7 +1,7 @@
 #ifndef CRAFTR_LOGGER
 #define CRAFTR_LOGGER
 
-#include "craftrEditor/log_display.hpp"
+#include "craftr_editor/log_display.hpp"
 #include <filesystem>
 #include <gtkmm.h>
 #include <map>
