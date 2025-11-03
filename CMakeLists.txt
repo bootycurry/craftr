@@ -47,10 +47,10 @@ add_executable(
   src/craftr_engine/game_object.cpp
   src/craftr_engine/transform.cpp
   src/craftr_engine/vector2.cpp
-  src/craftrEditor/log_display.cpp
-  src/craftrEditor/scene.cpp
-  src/craftrEditor/scene_hierarchy.cpp
-  src/craftrEditor/inspector_panel.cpp)
+  src/craftr_editor/log_display.cpp
+  src/craftr_editor/scene.cpp
+  src/craftr_editor/scene_hierarchy.cpp
+  src/craftr_editor/inspector_panel.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries

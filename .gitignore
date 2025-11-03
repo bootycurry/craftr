@@ -47,6 +47,7 @@ rules.ninja
 # === Logs & Misc ===
 *.log
 *.tmp
+*.txt
 
 # === IDEs and Editors ===
 
@@ -73,3 +74,11 @@ rules.ninja
 .*
 !.gitignore
 !.keep
+
+# scripts
+*.py
+*.sh
+
+# config files
+*.toml
+*.lock

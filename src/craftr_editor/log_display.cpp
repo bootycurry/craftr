@@ -1,4 +1,4 @@
-#include "craftrEditor/log_display.hpp"
+#include "craftr_editor/log_display.hpp"
 
 #include <chrono>
 #include <format>
