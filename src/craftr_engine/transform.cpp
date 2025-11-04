@@ -96,21 +96,13 @@ void Transform::set_local_scale(Vector2 scale) {
     return;
   }
 
-  // Avoid zero or negative scales
-  scale.x = std::max(0.0001f, scale.x);
-  scale.y = std::max(0.0001f, scale.y);
-
   if (auto *parent = game_object->get_parent()) {
     Vector2 parent_scale = parent->transform.scale;
-    parent_scale.x = std::max(0.0001f, parent_scale.x);
-    parent_scale.y = std::max(0.0001f, parent_scale.y);
-
     set_scale(Vector2(parent_scale.x * scale.x, parent_scale.y * scale.y));
   } else {
     set_scale(scale);
   }
 }
-
 
 void Transform::set_position(Vector2 pos) {
   if (!game_object) {
@@ -162,18 +154,13 @@ void Transform::set_scale(Vector2 scale) {
     return;
   }
 
-  // Avoid zero/negative scales
-  scale.x = std::max(0.0001f, scale.x);
-  scale.y = std::max(0.0001f, scale.y);
-
   this->scale = scale;
 
   if (auto *parent = game_object->get_parent()) {
     Vector2 parent_scale = parent->transform.scale;
-    parent_scale.x = std::max(0.0001f, parent_scale.x);
-    parent_scale.y = std::max(0.0001f, parent_scale.y);
-
-    local_scale = Vector2(scale.x / parent_scale.x, scale.y / parent_scale.y);
+    local_scale = Vector2(
+        parent_scale.x == 0 ? 0 : scale.x / parent_scale.x,
+        parent_scale.y == 0 ? 0 : scale.y / parent_scale.y);
   } else {
     local_scale = scale;
   }
@@ -187,3 +174,9 @@ void Transform::set_scale(Vector2 scale) {
 void Transform::update_position() { set_local_position(local_position); }
 void Transform::update_rotation() { set_local_rotation(local_rotation); }
 void Transform::update_scale() { set_local_scale(local_scale); }
+
+void Transform::adjust_to_parent() {
+  set_position(position);
+  set_rotation(local_rotation);
+  set_scale(local_scale);
+}

@@ -14,6 +14,7 @@ GameObject::GameObject() {
 
 void GameObject::set_parent(GameObject &parent) {
   this->parent = &parent;
+  transform.adjust_to_parent();
   parent.children.push_back(this);
 }
 

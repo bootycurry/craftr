@@ -34,13 +34,19 @@ constexpr PropertyType deduce_property_type() {
 #define REGISTER_PROPERTY(fieldName) \
     properties.push_back(Property{#fieldName, \
         [this]() { \
-            std::ostringstream ss; ss << this->fieldName; \
+            std::ostringstream ss; \
+            ss.precision(6); \
+            ss << std::fixed << this->fieldName; \
             return ss.str(); \
         }, \
         [this](const std::string& val) { \
-            std::istringstream ss(val); \
-            ss >> this->fieldName; \
-            if (ss.fail()) throw std::invalid_argument("Invalid input for property " #fieldName); \
+            if constexpr (std::is_floating_point_v<decltype(this->fieldName)>) { \
+                this->fieldName = static_cast<decltype(this->fieldName)>(std::stod(val)); \
+            } else { \
+                std::istringstream ss(val); \
+                ss >> this->fieldName; \
+                if (ss.fail()) throw std::invalid_argument("Invalid input for property " #fieldName); \
+            } \
         }, \
         deduce_property_type<decltype(this->fieldName)>() \
     });
@@ -48,13 +54,19 @@ constexpr PropertyType deduce_property_type() {
 #define REGISTER_PROPERTY_WITH_CALLBACK(fieldName, on_change_callback) \
     properties.push_back(Property{#fieldName, \
         [this]() { \
-            std::ostringstream ss; ss << this->fieldName; \
+            std::ostringstream ss; \
+            ss.precision(6); \
+            ss << std::fixed << this->fieldName; \
             return ss.str(); \
         }, \
         [this](const std::string& val) { \
-            std::istringstream ss(val); \
-            ss >> this->fieldName; \
-            if (ss.fail()) throw std::invalid_argument("Invalid input for property " #fieldName); \
+            if constexpr (std::is_floating_point_v<decltype(this->fieldName)>) { \
+                this->fieldName = static_cast<decltype(this->fieldName)>(std::stod(val)); \
+            } else { \
+                std::istringstream ss(val); \
+                ss >> this->fieldName; \
+                if (ss.fail()) throw std::invalid_argument("Invalid input for property " #fieldName); \
+            } \
             on_change_callback(); \
         }, \
         deduce_property_type<decltype(this->fieldName)>() \

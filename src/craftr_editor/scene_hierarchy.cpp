@@ -115,9 +115,6 @@ void SceneHierarchy::create_game_object(
 
     if (parent_go) {
       game_obj_raw_ptr->set_parent(*parent_go);
-      game_obj_raw_ptr->transform.set_local_position(Vector2(0.0f,0.0f));
-      game_obj_raw_ptr->transform.set_local_rotation(0.0f);
-      game_obj_raw_ptr->transform.set_local_scale(Vector2(1.0f, 1.0f));
       new_row_iter = ref_tree_store->append(parent_iter->children());
       Gtk::TreeModel::Path parent_path = ref_tree_store->get_path(parent_iter);
       tree_view.expand_to_path(parent_path);

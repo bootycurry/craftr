@@ -43,6 +43,7 @@ public:
   float rotation;
 
   void initialize_properties();
+  void adjust_to_parent();
 
   Vector2 up() const;
   Vector2 right() const;
