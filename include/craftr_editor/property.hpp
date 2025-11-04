@@ -45,4 +45,20 @@ constexpr PropertyType deduce_property_type() {
         deduce_property_type<decltype(this->fieldName)>() \
     });
 
+#define REGISTER_PROPERTY_WITH_CALLBACK(fieldName, on_change_callback) \
+    properties.push_back(Property{#fieldName, \
+        [this]() { \
+            std::ostringstream ss; ss << this->fieldName; \
+            return ss.str(); \
+        }, \
+        [this](const std::string& val) { \
+            std::istringstream ss(val); \
+            ss >> this->fieldName; \
+            if (ss.fail()) throw std::invalid_argument("Invalid input for property " #fieldName); \
+            on_change_callback(); \
+        }, \
+        deduce_property_type<decltype(this->fieldName)>() \
+    });
+
+
 #endif

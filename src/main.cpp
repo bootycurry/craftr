@@ -6,6 +6,7 @@
 #include "craftr_editor/scene_hierarchy.hpp"
 #include "glibmm/ustring.h"
 #include "logger.hpp"
+#include <craftr_editor/scene.hpp>
 
 Gtk::Window *temp_main_window = nullptr;
 
@@ -26,6 +27,7 @@ public:
     bottom_right.append_page(log_display.main_box, "Log");
     top_right.append_page(scene_hierarchy, "Scene");
     bottom_left.append_page(inspector_panel, "Inspector");
+    top_left.append_page(scene.main_box, "Scene View");
 
     scene_hierarchy.set_inspector_panel(inspector_panel);
 
@@ -44,6 +46,7 @@ protected:
   LogDisplay log_display;
   SceneHierarchy scene_hierarchy;
   InspectorPanel inspector_panel;
+  Scene scene;
 
 private:
   Gtk::Paned hor;

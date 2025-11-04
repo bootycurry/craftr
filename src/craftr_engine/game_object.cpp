@@ -2,34 +2,15 @@
 
 #include "craftr_engine/game_object.hpp"
 
-GameObject::GameObject(GameObject *parent) : parent(parent) {}
-GameObject::GameObject() {};
-
-template <typename T> void GameObject::add_component() {
-  static_assert(std::is_base_of<Component, T>::value,
-                "T must derive from Component");
-  static_assert(!std::is_same<T, Transform>::value,
-                "Adding Transform component is not allowed");
-  auto typeId = std::type_index(typeid(T));
-
-  if (components.find(typeId) != components.end()) {
-    throw std::runtime_error("Component already exists on the object");
-  }
-
-  T *component = new T();
-  component->set_game_object(this);
-  components[typeId] = std::unique_ptr<Component>(component);
+GameObject::GameObject(GameObject *parent) : parent(parent) {
+  transform.set_game_object(*this);
+  transform.initialize_properties();
 }
+GameObject::GameObject() {
+  transform.set_game_object(*this);
+  transform.initialize_properties();
+};
 
-template <typename T> T *GameObject::get_component() {
-  static_assert(std::is_base_of<Component, T>::value,
-                "T must derive from Component");
-  auto it = components.find(std::type_index(typeid(T)));
-  if (it != components.end()) {
-    return dynamic_cast<T *>(it->second.get());
-  }
-  return nullptr;
-}
 
 void GameObject::set_parent(GameObject &parent) {
   this->parent = &parent;
@@ -43,7 +24,7 @@ void GameObject::add_child(GameObject &child) {
 
 GameObject *GameObject::get_parent() { return parent; }
 
-std::vector<GameObject *> GameObject::get_children() { return children; }
+const std::vector<GameObject *> GameObject::get_children() const { return children; }
 
 const std::unordered_map<std::type_index, std::unique_ptr<Component>>&
 GameObject::get_all_components() const {
