@@ -10,7 +10,7 @@ public:
   Vector2 operator+(const Vector2 &other) const;
   Vector2 operator-(const Vector2 &other) const;
 
-  Vector2(int x, int y);
+  Vector2(float x, float y);
   Vector2();
 };
 

@@ -75,20 +75,29 @@ void InspectorPanel::build_component_ui(Component *component) {
       hbox->append(*spin);
       break;
     }
-
+    
     case PropertyType::FLOAT: {
-      auto adj = Gtk::Adjustment::create(std::stof(prop.getter()), -100000.0,
-                                         100000.0, 0.1);
-      auto spin = Gtk::make_managed<Gtk::SpinButton>(adj, 0.1, 2);
+      auto initial = std::stof(prop.getter());
+      auto adj = Gtk::Adjustment::create(initial, -100000.0, 100000.0, 0.01, 1.0, 0.0);
+      auto spin = Gtk::make_managed<Gtk::SpinButton>(adj, 0.01, 4);
+      spin->set_digits(4);
+      spin->set_numeric(true);
+      spin->set_value(initial);
+
       spin->signal_value_changed().connect([&prop, spin]() {
         try {
-          prop.setter(std::to_string(spin->get_value()));
+          std::ostringstream ss;
+          ss.precision(6);
+          ss << std::fixed << spin->get_value();
+          prop.setter(ss.str());
         } catch (...) {
         }
       });
       hbox->append(*spin);
       break;
     }
+
+
 
     case PropertyType::BOOL: {
       auto check = Gtk::make_managed<Gtk::CheckButton>();

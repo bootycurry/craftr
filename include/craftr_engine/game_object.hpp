@@ -34,14 +34,19 @@ protected:
   Vector2 local_position;
   Vector2 local_scale;
   float local_rotation;
+  bool is_updating_from_inspector; // Prevent recursive updates
+
 
 public:
   Vector2 position;
   Vector2 scale;
   float rotation;
 
-  Vector2 up();
-  Vector2 right();
+  void initialize_properties();
+  void adjust_to_parent();
+
+  Vector2 up() const;
+  Vector2 right() const;
 
   Transform();
 
@@ -63,7 +68,7 @@ class GameObject {
 protected:
   std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
   std::vector<GameObject *> children;
-  GameObject *parent;
+  GameObject *parent = nullptr;
 
 public:
   std::string name;
@@ -81,9 +86,35 @@ public:
   void set_parent(GameObject &parent);
 
   GameObject *get_parent();
-  std::vector<GameObject *> get_children();
+  const std::vector<GameObject *> get_children() const;
   GameObject();
   GameObject(GameObject *parent);
 };
+
+template <typename T> void GameObject::add_component() {
+  static_assert(std::is_base_of<Component, T>::value,
+                "T must derive from Component");
+  static_assert(!std::is_same<T, Transform>::value,
+                "Adding Transform component is not allowed");
+  auto typeId = std::type_index(typeid(T));
+
+  if (components.find(typeId) != components.end()) {
+    throw std::runtime_error("Component already exists on the object");
+  }
+
+  T* component = new T();
+  component->set_game_object(*this);
+  components[typeId] = std::unique_ptr<Component>(component);
+}
+
+template <typename T> T* GameObject::get_component() {
+  static_assert(std::is_base_of<Component, T>::value,
+                "T must derive from Component");
+  auto it = components.find(std::type_index(typeid(T)));
+  if (it != components.end()) {
+    return dynamic_cast<T*>(it->second.get());
+  }
+  return nullptr;
+}
 
 #endif

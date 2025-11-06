@@ -50,7 +50,8 @@ add_executable(
   src/craftr_editor/log_display.cpp
   src/craftr_editor/scene.cpp
   src/craftr_editor/scene_hierarchy.cpp
-  src/craftr_editor/inspector_panel.cpp)
+  src/craftr_editor/inspector_panel.cpp
+  src/craftr_engine/sprite_renderer.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Link libraries

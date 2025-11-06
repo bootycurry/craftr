@@ -1,6 +1,7 @@
 #include "craftr_editor/scene_hierarchy.hpp"
 #include "craftr_editor/log_display.hpp"
 #include "logger.hpp"
+#include "craftr_engine/scene_graph.hpp"
 
 SceneHierarchy::SceneHierarchy() : Gtk::Box(Gtk::Orientation::VERTICAL) {
   set_expand(true);
@@ -98,11 +99,16 @@ void SceneHierarchy::create_game_object(
 
   auto game_obj_owner = std::make_unique<GameObject>();
   GameObject *game_obj_raw_ptr = game_obj_owner.get();
+  game_obj_raw_ptr->name = name;
 
+  // Keep ownership in SceneHierarchy
   game_objects.push_back(std::move(game_obj_owner));
 
-  Gtk::TreeModel::iterator new_row_iter;
+  // Register for rendering / scene queries (SceneGraph doesn't own)
+  SceneGraph::instance().register_game_object(game_obj_raw_ptr);
 
+  Gtk::TreeModel::iterator new_row_iter;
+  
   if (parent_iter) {
     auto parent_row = *parent_iter;
     GameObject *parent_go = parent_row[columns.game_obj_ptr];
@@ -125,6 +131,7 @@ void SceneHierarchy::set_inspector_panel(InspectorPanel &inspector) {
   ref_tree_selection->signal_changed().connect([&]() {
     if (auto iter = ref_tree_selection->get_selected()) {
       GameObject *go = (*iter)[columns.game_obj_ptr];
+
       inspector.set_selected_object(go);
     } else {
       inspector.set_selected_object(nullptr);
