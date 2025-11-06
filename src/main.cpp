@@ -1,4 +1,3 @@
-#include <glad/glad.h>
 #include <gtkmm-4.0/gtkmm.h>
 
 #include "craftr_editor/inspector_panel.hpp"
