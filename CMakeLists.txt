@@ -38,10 +38,7 @@ else() # Windows
   find_package(OpenGL REQUIRED)
 endif()
 
-# Main executable
-add_executable(
-  ${PROJECT_NAME}
-  src/main.cpp
+add_library(craftr_core STATIC
   src/logger.cpp
   src/craftr_engine/component.cpp
   src/craftr_engine/game_object.cpp
@@ -52,7 +49,23 @@ add_executable(
   src/craftr_editor/scene_hierarchy.cpp
   src/craftr_editor/inspector_panel.cpp
   src/craftr_engine/sprite_renderer.cpp)
+target_include_directories(craftr_core PUBLIC include)
+target_link_libraries(craftr_core PRIVATE glfw glad OpenGL::GL
+                      ${GTKMM_LIBRARIES})
+
+
+# Main executable
+add_executable(
+  ${PROJECT_NAME}
+  src/main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
+
+
+add_library(craftr_c_api_go SHARED src/craftr_c_api/game_object.cpp)
+target_include_directories(craftr_c_api_go PRIVATE include)
+target_link_libraries(craftr_c_api_go PRIVATE glfw glad OpenGL::GL
+                      ${GTKMM_LIBRARIES})
+
 
 # Link libraries
 target_link_libraries(
@@ -60,14 +73,15 @@ target_link_libraries(
   PRIVATE glfw # GLFW submodule (handles window/input)
           glad # GLAD OpenGL loader
           OpenGL::GL # OpenGL
+          craftr_core
           ${GTKMM_LIBRARIES})
 
 # Platform-specific libraries
 if(UNIX AND NOT APPLE) # Linux
   target_link_libraries(${PROJECT_NAME} PRIVATE X11 Xrandr Xi Xxf86vm Xinerama
-                                                Xcursor)
+                                                Xcursor craftr_core)
 elseif(APPLE) # macOS
   target_link_libraries(
     ${PROJECT_NAME} PRIVATE ${COCOA_LIBRARY} ${IOKIT_LIBRARY}
-                            ${COREVIDEO_LIBRARY})
+                            ${COREVIDEO_LIBRARY} craftr_core)
 endif()
