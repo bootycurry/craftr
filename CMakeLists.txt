@@ -61,7 +61,7 @@ add_executable(
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 
-add_library(craftr_c_api_go SHARED src/craftr_c_api/game_object.cpp)
+add_library(craftr_c_api_go SHARED src/craftr_c_api/game_object_wrapper.cpp)
 target_include_directories(craftr_c_api_go PRIVATE include)
 target_link_libraries(craftr_c_api_go PRIVATE glfw glad OpenGL::GL
                       ${GTKMM_LIBRARIES})
