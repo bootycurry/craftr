@@ -25,6 +25,7 @@ public:
   const std::vector<Property> &get_properties() const;
   virtual ~Component() = default;
   virtual std::string get_name() const;
+  virtual void update() {}
 
   friend GameObject;
 };
@@ -89,6 +90,8 @@ public:
   const std::vector<GameObject *> get_children() const;
   GameObject();
   GameObject(GameObject *parent);
+
+  void update();
 };
 
 template <typename T> void GameObject::add_component() {

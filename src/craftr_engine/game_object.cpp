@@ -32,3 +32,13 @@ GameObject::get_all_components() const {
   return components;
 }
 
+
+void GameObject::update() {
+  for (auto& [type, component] : components) {
+    component->update();
+  }
+
+  for (auto* child : children) {
+    child->update();
+  }
+}
