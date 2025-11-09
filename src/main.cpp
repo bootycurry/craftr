@@ -1,12 +1,15 @@
+#include "glibmm/main.h"
 #include <gtkmm-4.0/gtkmm.h>
 
+#include "craftr_c_api/editor.h"
 #include "craftr_editor/inspector_panel.hpp"
 #include "craftr_editor/log_display.hpp"
+#include "craftr_editor/scene.hpp"
 #include "craftr_editor/scene_hierarchy.hpp"
 #include "glibmm/ustring.h"
 #include "logger.hpp"
-#include <craftr_editor/scene.hpp>
 
+SceneHierarchy *g_scene_hierarchy = nullptr;
 Gtk::Window *temp_main_window = nullptr;
 
 class MainWindow : public Gtk::Window {
@@ -29,6 +32,14 @@ public:
     top_left.append_page(scene.main_box, "Scene View");
 
     scene_hierarchy.set_inspector_panel(inspector_panel);
+    g_scene_hierarchy = &scene_hierarchy;
+
+    craftr_set_scene_refresh_callback([]() {
+      if (g_scene_hierarchy) {
+        Glib::signal_idle().connect_once(
+            []() { g_scene_hierarchy->refresh_hierarchy_tree(); });
+      }
+    });
 
     set_child(hor);
     Logger::instance().set_target_display(&log_display);

@@ -72,9 +72,11 @@ target_link_libraries(craftr_core
 
 # Also link platform-specific system libs to core (so consumers don't need to)
 if(UNIX AND NOT APPLE)
-  target_link_libraries(craftr_core PUBLIC X11 Xrandr Xi Xxf86vm Xinerama Xcursor)
+  target_link_libraries(craftr_core PUBLIC X11 Xrandr Xi Xxf86vm Xinerama
+                        Xcursor)
 elseif(APPLE)
-  target_link_libraries(craftr_core PUBLIC ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+  target_link_libraries(craftr_core PUBLIC ${COCOA_LIBRARY} ${IOKIT_LIBRARY}
+                        ${COREVIDEO_LIBRARY})
 endif()
 
 
@@ -90,29 +92,32 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
     craftr_core
+    craftr_c_api
     glad
 )
 
 # C API shared library (exposes C ABI)
 #======================================================
-add_library(craftr_c_api_game_object SHARED
+add_library(craftr_c_api SHARED
   src/craftr_c_api/game_object_wrapper.cpp
+  src/craftr_c_api/scene_wrapper.cpp
+  src/craftr_c_api/editor_wrapper.cpp
 )
 
 # Ensure the shared library sees headers
-target_include_directories(craftr_c_api_game_object
+target_include_directories(craftr_c_api
   PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
 # Link the shared library to the engine core (and helper libs if needed)
-target_link_libraries(craftr_c_api_game_object
+target_link_libraries(craftr_c_api
   PRIVATE
     craftr_core
 )
 
 # When building the shared library, define macro so export header uses dllexport on Windows
-target_compile_definitions(craftr_c_api_game_object
+target_compile_definitions(craftr_c_api
   PRIVATE
     CRAFTR_BUILD_DLL
 )
@@ -122,7 +127,9 @@ target_compile_definitions(craftr_c_api_game_object
 #======================================================
 if(UNIX AND NOT APPLE)
   # on Linux make sure the shared lib also links the same system libraries (if not inherited)
-  target_link_libraries(craftr_c_api_game_object PRIVATE X11 Xrandr Xi Xxf86vm Xinerama Xcursor)
+  target_link_libraries(craftr_c_api PRIVATE X11 Xrandr Xi Xxf86vm Xinerama
+                        Xcursor)
 elseif(APPLE)
-  target_link_libraries(craftr_c_api_game_object PRIVATE ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+  target_link_libraries(craftr_c_api PRIVATE ${COCOA_LIBRARY} ${IOKIT_LIBRARY}
+                        ${COREVIDEO_LIBRARY})
 endif()
