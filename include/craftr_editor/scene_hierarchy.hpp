@@ -18,9 +18,9 @@ class SceneHierarchy : public Gtk::Box {
 public:
   SceneHierarchy();
   ~SceneHierarchy() = default;
-  void set_inspector_panel(InspectorPanel& inspector);
-  
-  
+  void set_inspector_panel(InspectorPanel &inspector);
+  void refresh_hierarchy_tree();
+
 protected:
   class ModelColumns : public Gtk::TreeModel::ColumnRecord {
   public:
@@ -31,8 +31,6 @@ protected:
 
     Gtk::TreeModelColumn<Glib::ustring> col_name;
     Gtk::TreeModelColumn<GameObject *> game_obj_ptr;
-    
-    
   };
 
   ModelColumns columns;
@@ -51,7 +49,6 @@ protected:
 
   void on_selection_changed();
   void on_button_press(int n_press, double x, double y);
-  
 
 private:
   std::vector<std::unique_ptr<GameObject>> game_objects;

@@ -1,7 +1,7 @@
 #include "craftr_editor/scene_hierarchy.hpp"
 #include "craftr_editor/log_display.hpp"
-#include "logger.hpp"
 #include "craftr_engine/scene_graph.hpp"
+#include "logger.hpp"
 
 SceneHierarchy::SceneHierarchy() : Gtk::Box(Gtk::Orientation::VERTICAL) {
   set_expand(true);
@@ -108,7 +108,7 @@ void SceneHierarchy::create_game_object(
   SceneGraph::instance().register_game_object(game_obj_raw_ptr);
 
   Gtk::TreeModel::iterator new_row_iter;
-  
+
   if (parent_iter) {
     auto parent_row = *parent_iter;
     GameObject *parent_go = parent_row[columns.game_obj_ptr];
@@ -137,4 +137,25 @@ void SceneHierarchy::set_inspector_panel(InspectorPanel &inspector) {
       inspector.set_selected_object(nullptr);
     }
   });
+}
+
+void SceneHierarchy::refresh_hierarchy_tree() {
+  if (!ref_tree_store) {
+    Logger::instance().log(CONSOLE, "Treestore not initialized", WARNING);
+    return;
+  }
+
+  ref_tree_store->clear();
+
+  const auto &objects = SceneGraph::instance().get_all();
+
+  for (auto *go : objects) {
+    if (!go)
+      continue;
+
+    auto iter = ref_tree_store->append();
+    (*iter)[columns.col_name] = go->name;
+    (*iter)[columns.game_obj_ptr] = go;
+  }
+  Logger::instance().log(CONSOLE, "Scene hierarchy refreshed", INFO);
 }
